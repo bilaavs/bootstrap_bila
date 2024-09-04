@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Rifa Ecommerce</title>
+    <title>Mini Ecommerce</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -36,16 +36,7 @@
 
       var cart = 0;
 
-      function updateCart() {
-        var addCart = document.getElementById('cart');
-        if (cart < 10) {
-          addCart.innerHTML = <i class="fas fa-shopping-cart"></i>(${cart});
-        } else {
-          addCart.innerHTML = <i class="fas fa-shopping-cart"></i>(9+);
-        }
-      }
-
-      function inputItems(items) {
+    function inputItems(items) {
         var card = `
             <div class="col-4 mt-4 mb-5 ml-0">
                 <div class="card" style="width: 18rem;">
@@ -76,9 +67,34 @@
         inputItems(items[i]);
       }
 
-    
+      function searchItems(keyword) {
+        var searching = [];
+        for (var i = 0; i < items.length; i++) {
+          var itemName = items[i][1].toLowerCase();
+          if (itemName.includes(keyword.toLowerCase())) {
+            searching.push(items[i]);
+          }
+        }
+        return searching;
+      }
+
+      document.getElementById('formItem').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var keyword = document.getElementById('keyword').value;
+        var searching = searchItems(keyword);
+
+        document.getElementById('listBarang').innerHTML = '';
+
+        if (searching.length > 0) {
+          for (var i = 0; i < searching.length; i++) {
+            inputItems(searching[i]);
+          }
+        } else {
+          document.getElementById('listBarang').innerHTML = '<p>Tidak ada hasil yang ditemukan.</p>';
+        }
+      });
 
       updateCart();
     </script>
   </body>
-</html> 
+</html>
