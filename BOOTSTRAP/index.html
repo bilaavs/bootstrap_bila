@@ -29,21 +29,30 @@
     <script>
       var items = [
         ['001', 'Keyboard Logitek', 60000, 'Keyboard gaming dengan performa tinggi.', 'msi.jpg'],
-        ['002', 'Keyboard Msi', 300000, 'Keyboard yang nyamana untuk bekerja.', 'logitek.jpg'],
+        ['002', 'Keyboard Msi', 300000, 'Keyboard yang nyaman untuk bekerja.', 'logitek.jpg'],
         ['003', 'Mouse Genius', 50000, 'Mouse Gaming yang cepat dan presisi.', 'genius.jpeg'],
         ['004', 'Mouse Jerry', 30000, 'Mouse yang disukai kucing', 'jerry.jpg'],
       ];
 
       var cart = 0;
 
-    function inputItems(items) {
-        var card = `
+      function updateCart() {
+        var addCart = document.getElementById('cart');
+        if (cart < 10) {
+          addCart.innerHTML = `<i class="fas fa-shopping-cart"></i> (${cart})`;
+        } else {
+          addCart.innerHTML = `<i class="fas fa-shopping-cart"></i> (9+)`;
+        }
+      }
+
+      function inputItems(items) {
+        let card = `
             <div class="col-4 mt-4 mb-5 ml-0">
                 <div class="card" style="width: 18rem;">
-                    <img src="${items[4]}" class="card-img-top" height="200px" width="200px">
+                    <img src="${items[4]}" class="card-img-top" height="200px" width="200px" alt="${items[1]}">
                     <div class="card-body">
-                        <h5 class="card-title" id="itemName">${items[1]}</h5>
-                        <p class="card-text" id="itemDesc">${items[3]}</p>
+                        <h5 class="card-title">${items[1]}</h5>
+                        <p class="card-text">${items[3]}</p>
                         <p class="card-text">Rp ${items[2].toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                         <a href="#" class="btn btn-primary add-to-cart" data-id="${items[0]}">Add To Cart</a>
                     </div>
@@ -57,6 +66,12 @@
         cart++;
         updateCart();
       }
+
+      var resCart = document.getElementById('cart');
+      resCart.addEventListener('click', function () {
+        cart = 0;
+        updateCart();
+      });
 
       $(document).on('click', '.add-to-cart', function () {
         var itemId = $(this).data('id');
